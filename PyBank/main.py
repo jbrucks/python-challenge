@@ -15,6 +15,7 @@ with open(budgetData, 'r') as csvfile:
 
     Date = []
     P_L = []
+    MonthlyChange = []
 
     for row in csvreader:
         Date.append(row[0])
@@ -23,40 +24,40 @@ with open(budgetData, 'r') as csvfile:
     # Total months
     totalValue = 0
     for row in P_L:
-        totalValue = totalValue + row
+        totalValue += row
 
     # Total months
     totalMonths = 0
     for row in Date:
         totalMonths += 1
 
-    # Greatest Decrease
-    gDec = 0
-    for row in P_L:
-        if row < gDec:
-            gDec = row
-
-    # Greatest Increase
-    gInc = 0
-    for row in P_L:
-        if row > gInc:
-             gInc = row
-
-    data = zip(Date, P_L)
+    # Total Month Changes
+    for row in range(len(P_L)-1):
+        MonthlyChange.append(P_L[row+1] - P_L[row])
     
-    # Greatest Info
-    gIncAll = 0
-    gDecAll = 0
-    for row in data:
+    # Greatest Increase and Month
+    #   prev_value = 0
+    #   gInc = 0
+    #   for row in P_L:
+    #       change = row - prev_value
+    #       if change > gInc:
+    #           gInc = change
+    #       prev_value = row
+    gInc = max(MonthlyChange)
+    gIncMonth = MonthlyChange.index(max(MonthlyChange)) + 1
 
-        if gInc == row[1]:
-            gIncAll = row 
+    # Greatest Decrease
+    #   prev_value = 0
+    #   gInc = 0
+    #   for row in P_L:
+    #       change = row - prev_value
+    #       if change > gInc:
+    #           gInc = change
+    #       prev_value = row
+    gDec = min(MonthlyChange)
+    gDecMonth = MonthlyChange.index(min(MonthlyChange)) + 1
 
-        elif gDec == row[1]:
-            gDecAll = row 
-
-    # calculate average change
-    avgChange = (gDec - gInc) / totalMonths
+    avgChange = sum(MonthlyChange) / (totalMonths - 1)
         
 # Print out the budget's name and their percentage stats
 print(f"Financial Analysis")
@@ -64,10 +65,10 @@ print(f"------------------------------------------------")
 print(f"Total Months: {totalMonths}")
 print(f"Total: ${int(totalValue)}")
 print(f"Average Change: ${round(avgChange, 2)}")
-print(f"Greatest Increase in Profits: {gIncAll[0]} (${gIncAll[1]})")
-print(f"Greatest Decrease in Profits: {gDecAll[0]} (${gDecAll[1]})")
+print(f"Greatest Increase in Profits: {Date[gIncMonth]} (${gInc})")
+print(f"Greatest Decrease in Profits: {Date[gDecMonth]} (${gDec})")
 
-#Output Results to txt File
+# Output Results to txt File
 outputAnalysis = os.path.join("Analysis", "BudgetAnalysis.txt")
 
 with open(outputAnalysis, 'w') as txtfile:
@@ -77,61 +78,5 @@ with open(outputAnalysis, 'w') as txtfile:
     print(f"Total Months: {totalMonths}", file=txtfile)
     print(f"Total: ${int(totalValue)}", file=txtfile)
     print(f"Average Change: ${round(avgChange, 2)}", file=txtfile)
-    print(f"Greatest Increase in Profits: {gIncAll[0]} (${gIncAll[1]})", file=txtfile)
-    print(f"Greatest Decrease in Profits: {gDecAll[0]} (${gDecAll[1]})", file=txtfile) 
-
-#Alternate Version
-# with open(budgetData, newline='',) as csvfile:
-
-#     csvreader = csv.reader(csvfile, delimiter=',')
-
-#     header = next(csvreader)
-    
-#     Date = []
-#     profitLosses = []
-
-#     for row in csvreader:
-#         Date.append(row[0])
-#         profitLosses.append(int(row[1]))
-
-#     total = sum(profitLosses)
-
-#     average = total / len(profitLosses)
-
-#     greatInc = max(profitLosses)
-
-#     greatDec = min(profitLosses)
-
-#     averageChange = (greatDec - greatInc) / len(Date)
-
-#     data = zip(Date, profitLosses)
-    
-#     for row in data:
-
-#         if greatInc == row[1]:
-#             greatIncFinal = row 
-
-#         elif greatDec == row[1]:
-#             greatDecFinal = row 
-
-#     print('Financial Analysis')
-#     print('--------------------------------------------')
-#     print(f'Total Months: {len(Date)}') 
-#     print(f'Total: ${int(total)}') 
-#     print(f'Average Change: ${round(averageChange, 2)}') 
-#     print(f'Greatest Increase in Profits: {greatIncFinal[0]} (${greatIncFinal[1]})') 
-#     print(f'Greatest Decrease in Profits: {greatDecFinal[0]} (${greatDecFinal[1]})') 
-
-
-#Output Results to txt File
-# outputAnalysis = os.path.join("Analysis.txt")
-      
-# with open(outputAnalysis, 'w') as txtfile:
-
-#     print('Financial Analysis', file=txtfile)
-#     print('--------------------------------------------', file=txtfile)
-#     print(f'Total Months: {len(Date)}', file=txtfile) 
-#     print(f'Total: {int(total)}', file=txtfile) 
-#     print(f'Average Change: ${round(averageChange, 2)}', file=txtfile) 
-#     print(f'Greatest Increase in Profits: {greatIncFinal[0]} (${greatIncFinal[1]})', file=txtfile) 
-#     print(f'Greatest Decrease in Profits: {greatDecFinal[0]} (${greatDecFinal[1]})', file=txtfile) 
+    print(f"Greatest Increase in Profits: {Date[gIncMonth]} (${gInc})", file=txtfile)
+    print(f"Greatest Decrease in Profits: {Date[gDecMonth]} (${gDec})", file=txtfile) 

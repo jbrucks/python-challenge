@@ -38,7 +38,7 @@ with open(electionData, 'r') as csvfile:
             KhanVotes += 1
 
     # Khan Vote Percentage
-    KhanPer = round(KhanVotes / totalVotes * 100, 3)
+    KhanPer = KhanVotes / totalVotes * 100
 
     # Khan Info
     Khan = ("Khan", KhanPer, KhanVotes)
@@ -50,7 +50,7 @@ with open(electionData, 'r') as csvfile:
             CorreyVotes += 1
     
     # Correy Vote Percentage
-    CorreyPer = round(CorreyVotes / totalVotes * 100, 3)
+    CorreyPer = CorreyVotes / totalVotes * 100
 
     # Correy Info
     Correy = ("Correy", CorreyPer, CorreyVotes)
@@ -62,7 +62,7 @@ with open(electionData, 'r') as csvfile:
             LiVotes += 1
 
     # Li Vote Percentage
-    LiPer = round(LiVotes / totalVotes * 100, 3)
+    LiPer = LiVotes / totalVotes * 100
 
     # Li Info
     Li = ("Li", LiPer, LiVotes)
@@ -74,7 +74,7 @@ with open(electionData, 'r') as csvfile:
             OtooleyVotes += 1
 
     # O'Tooley Vote Percentage
-    OtooleyPer = round(OtooleyVotes / totalVotes * 100, 3)
+    OtooleyPer = OtooleyVotes / totalVotes * 100
 
     # O'Tooley Info
     OTooley = ("O'Tooley", OtooleyPer, OtooleyVotes)
@@ -106,10 +106,10 @@ print(f"Election Results")
 print(f"------------------------------------------------")
 print(f"Total Votes: {totalVotes}")
 print(f"------------------------------------------------")
-print(f"{First[0]}: {round(First[1], 3)}% ({First[2]})")
-print(f"{Correy[0]}: {round(Correy[1], 3)}% ({Correy[2]})")
-print(f"{Li[0]}: {round(Li[1], 3)}% ({Li[2]})")
-print(f"{OTooley[0]}: {round(OTooley[1], 3)}% ({OTooley[2]})")
+print(f"{First[0]}: {First[1]:.3f}% ({First[2]})")
+print(f"{Correy[0]}: {Correy[1]:.3f}% ({Correy[2]})")
+print(f"{Li[0]}: {Li[1]:.3f}% ({Li[2]})")
+print(f"{OTooley[0]}: {OTooley[1]:.3f}% ({OTooley[2]})")
 print(f"------------------------------------------------")
 print(f"Winner: {First[0]}")
 print(f"------------------------------------------------")
@@ -123,10 +123,10 @@ with open(outputAnalysis, 'w') as txtfile:
     print(f'------------------------------------------------', file=txtfile)
     print(f'Total Votes: {totalVotes}', file=txtfile)
     print(f'------------------------------------------------', file=txtfile)
-    print(f'{First[0]}: {round(First[1], 3)}% ({First[2]})', file=txtfile)
-    print(f'{Correy[0]}: {round(Correy[1], 3)}% ({Correy[2]})', file=txtfile)
-    print(f'{Li[0]}: {round(Li[1], 3)}% ({Li[2]})', file=txtfile)
-    print(f'{OTooley[0]}: {round(OTooley[1], 3)}% ({OTooley[2]})', file=txtfile)
+    print(f'{First[0]}: {First[1]:.3f}% ({First[2]})', file=txtfile)
+    print(f'{Correy[0]}: {Correy[1]:.3f}% ({Correy[2]})', file=txtfile)
+    print(f'{Li[0]}: {Li[1]:.3f}% ({Li[2]})', file=txtfile)
+    print(f'{OTooley[0]}: {OTooley[1]:.3f}% ({OTooley[2]})', file=txtfile) 
     print(f'------------------------------------------------', file=txtfile)
     print(f'Winner: {First[0]}', file=txtfile)
     print(f'------------------------------------------------', file=txtfile)
